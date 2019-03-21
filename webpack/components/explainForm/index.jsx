@@ -20,9 +20,9 @@ import {
   HARD_DRIVE_HDD
 } from 'reducers/configuration/constants'
 
-import './configuration-form.sass'
+import './explain-form.sass'
 
-export default class ConfigurationForm extends React.Component {
+export default class ExplainForm extends React.Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     submitting: PropTypes.bool.isRequired,
@@ -169,9 +169,9 @@ export default class ConfigurationForm extends React.Component {
           options={this.hdTypeOptions()}
           tooltip="Type of data storage device"
         />
-        <div className="configuration-form-btn-wrapper">
-          <button className={classnames('configuration-form-btn', {
-            'configuration-form-btn--disabled': submitting
+        <div className="explain-form-btn-wrapper">
+          <button className={classnames('explain-form-btn', {
+            'explain-form-btn--disabled': submitting
           })} type="submit" disabled={submitting}>
             Generate
           </button>

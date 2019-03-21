@@ -22,8 +22,8 @@ page '/404.html', layout: false
 # Helpers
 ###
 
-require "lib/pgtune_helpers"
-helpers PgtuneHelpers
+require "lib/pev_helpers"
+helpers PevHelpers
 
 assets_dir = ::File.expand_path('../.tmp/dist', __FILE__)
 

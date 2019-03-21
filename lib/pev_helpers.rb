@@ -1,13 +1,13 @@
 # encoding: utf-8
 require 'digest'
 
-module PgtuneHelpers
+module PevHelpers
   def default_keywords_helper
-    "pgtune, postgresql, postgres, tuning, config, configuration, free, open source"
+    "postgresql, postgres, explain, visualizer, pev, tree, open source"
   end
 
   def default_description_helper
-    "PgTune - Tuning PostgreSQL config by your hardware"
+    "PEV - PostgreSQL EXPLAIN Visualizer"
   end
 
   def javascript_pack_tag(name)

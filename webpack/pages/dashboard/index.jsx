@@ -10,13 +10,13 @@ export default class DashboardPage extends React.Component {
       <div className="dashboard-page">
         <div className="dashboard-header-wrapper">
           <div className="dashboard-header-logo">
-            <img alt="Pgtune"
+            <img alt="PEV"
               className="dashboard-header-logo__svg"
               src={pgtuneLogo} />
           </div>
           <div className="dashboard-header-title">
             <h1 className="dashboard-header-title__text">
-              PGTune
+              PEV
             </h1>
           </div>
         </div>

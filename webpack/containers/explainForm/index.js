@@ -1,6 +1,6 @@
 import {reduxForm} from 'redux-form'
 import {connect} from 'react-redux'
-import ConfigurationForm from 'components/configurationForm'
+import ExplainForm from 'components/explainForm'
 import {submitConfiguration} from 'reducers/configuration'
 import {
   DEFAULT_DB_VERSION,
@@ -19,7 +19,7 @@ export default connect(
   null,
   mapDispatchToProps
 )(reduxForm({
-  form: 'configurationForm',
+  form: 'explainForm',
   validate,
   initialValues: {
     dbVersion: DEFAULT_DB_VERSION,
@@ -28,4 +28,4 @@ export default connect(
     totalMemoryUnit: SIZE_UNIT_GB,
     hdType: HARD_DRIVE_SSD
   }
-})(ConfigurationForm))
+})(ExplainForm))

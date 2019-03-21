@@ -1,5 +1,7 @@
 import lf from 'lovefield'
 
+const PLANS_LIMIT = 300
+
 export default class DBConnector {
   constructor() {
     this.schemaBuilder = lf.schema.create('dbPlans', 1)
@@ -14,7 +16,19 @@ export default class DBConnector {
         createdAt: new Date()
       })
       db.insertOrReplace().into(plansTable).values([row]).exec().then(() => {
-        // console.log('rows', rows)
+        db.select()
+          .from(plansTable)
+          .orderBy(plansTable.createdAt, lf.Order.DESC)
+          .limit(PLANS_LIMIT)
+          .exec().then((rows) => {
+            console.log('rows', rows)
+            const lastCreatedAt = rows[rows.length - 1].createdAt
+
+            db.delete()
+              .from(plansTable)
+              .where(plansTable.createdAt.lt(lastCreatedAt))
+              .exec()
+          })
       })
     })
   }
@@ -25,7 +39,7 @@ export default class DBConnector {
       .addColumn('query', lf.Type.STRING)
       .addColumn('content', lf.Type.OBJECT)
       .addColumn('createdAt', lf.Type.DATE_TIME)
-      .addPrimaryKey([{name: 'id', autoIncrement: true}])
+      .addPrimaryKey([{name: 'id', autoIncrement: true, order: lf.Order.ASC}])
       .addIndex('idxCreatedAt', [{name: 'createdAt', order: lf.Order.DESC}], false)
       .addNullable(['name', 'query'])
   }

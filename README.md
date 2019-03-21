@@ -1,4 +1,4 @@
-# [PostgreSQL EXPLAIN Visualizer (PEV)](https://pev.leopard.in.ua/) [![Build Status](https://travis-ci.org/le0pard/pev.svg?branch=master)](https://travis-ci.org/le0pard/pev)
+# [PostgreSQL EXPLAIN Visualizer (PEV)](https://pev.leopard.in.ua/) [![Build Status](https://travis-ci.com/le0pard/pev.svg?branch=master)](https://travis-ci.com/le0pard/pev)
 
 PostgreSQL EXPLAIN Visualizer (PEV)) is designed to make EXPLAIN output easier to grok
 

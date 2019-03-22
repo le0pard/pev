@@ -15,7 +15,7 @@ export default class DBConnector {
         },
         createdAt: new Date()
       })
-      db.insertOrReplace().into(plansTable).values([row]).exec().then(() => {
+      db.insert().into(plansTable).values([row]).exec().then(() => {
         db.select()
           .from(plansTable)
           .orderBy(plansTable.createdAt, lf.Order.DESC)
@@ -47,7 +47,10 @@ export default class DBConnector {
     if (this.db) {
       return Promise.resolve(this.db)
     } else {
-      return this.schemaBuilder.connect().then((db) => {
+      const options = {
+        storeType: lf.schema.DataStoreType.INDEXED_DB
+      }
+      return this.schemaBuilder.connect(options).then((db) => {
         this.db = db
         return this.db
       })

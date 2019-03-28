@@ -15,7 +15,6 @@ export default class ExplainForm extends React.Component {
   }
 
   handleGenerateConfig(values) {
-    console.log(values)
     return this.props.onSubmitForm(values)
   }
 

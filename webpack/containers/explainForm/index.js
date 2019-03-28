@@ -3,9 +3,13 @@ import {connect} from 'react-redux'
 import ExplainForm from 'components/explainForm'
 import {submitConfiguration} from 'reducers/configuration'
 import {validate} from './validation'
+import {database} from 'database'
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmitForm: (values) => dispatch(submitConfiguration(values))
+  onSubmitForm: (values) => {
+    //dispatch(submitConfiguration(values))
+    console.log(database)
+  }
 })
 
 export default connect(

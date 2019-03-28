@@ -4,7 +4,6 @@ import ReactDom from 'react-dom'
 import Root from './root'
 import {APP_THEMES_LIGHT} from 'reducers/settings/constants'
 import LocalStorage from 'lib/localStorage'
-import DBConnector from 'lib/dbConnector'
 import {initializeStore} from './redux/store'
 import {initServiceWorker} from './sw'
 // render app
@@ -20,9 +19,6 @@ const renderApp = (Component, appRoot, store) => {
 }
 
 const prepareStoreData = () => ({
-  db: {
-    connector: new DBConnector()
-  },
   settings: {
     theme: LocalStorage.getItem('theme') || APP_THEMES_LIGHT
   }

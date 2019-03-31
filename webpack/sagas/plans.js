@@ -1,6 +1,7 @@
 import {
   put,
   apply,
+  call,
   takeLatest
 } from 'redux-saga/effects'
 import {
@@ -23,11 +24,14 @@ function* fetchPlans() {
 }
 
 function* addPlanRequest({payload}) {
+  const {values, resolve, reject} = payload
   try {
-    const plan = yield apply(database, database.addPlan, [payload])
+    const plan = yield apply(database, database.addPlan, [values])
     yield put(successAddPlan(plan))
+    yield call(resolve, plan)
   } catch (error) {
     yield put(errorAddPlan(error))
+    yield call(reject, error)
   }
 }
 

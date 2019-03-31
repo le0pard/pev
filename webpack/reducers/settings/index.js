@@ -6,7 +6,6 @@ import {
 } from './constants'
 
 export const settingsToggleTheme = createAction('Toggle app theme')
-export const openConfigTab = createAction('Open config tab')
 
 const theme = createReducer({
   [settingsToggleTheme]: (state) => (

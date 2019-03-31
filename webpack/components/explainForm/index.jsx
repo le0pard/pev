@@ -11,11 +11,16 @@ export default class ExplainForm extends React.Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     submitting: PropTypes.bool.isRequired,
-    onSubmitForm: PropTypes.func.isRequired
+    onSubmitForm: PropTypes.func.isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired
+    }).isRequired
   }
 
   handleGenerateConfig(values) {
-    return this.props.onSubmitForm(values)
+    return this.props.onSubmitForm(values).then((plan) => {
+      this.props.history.push(`/plans/${plan.id}`)
+    })
   }
 
   render() {

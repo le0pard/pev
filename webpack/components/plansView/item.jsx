@@ -36,7 +36,7 @@ export default class PlansViewItem extends React.Component {
 
     return (
       <li>
-        <Link to={`/plan/${id}`}>
+        <Link to={`/plans/${id}`}>
           {this.getTitle()}
         </Link>
       </li>

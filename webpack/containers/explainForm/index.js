@@ -3,12 +3,21 @@ import {connect} from 'react-redux'
 import ExplainForm from 'components/explainForm'
 import {requestAddPlan} from 'reducers/plans'
 import {validate} from './validation'
+import {withRouter} from 'react-router'
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmitForm: (values) => dispatch(requestAddPlan({
-    ...values,
-    content: JSON.parse(values.content)
-  }))
+  onSubmitForm: (values) => {
+    return new Promise((resolve, reject) => {
+      dispatch(requestAddPlan({
+        values: {
+          ...values,
+          content: JSON.parse(values.content)
+        },
+        resolve,
+        reject
+      }))
+    })
+  }
 })
 
 export default connect(
@@ -17,4 +26,6 @@ export default connect(
 )(reduxForm({
   form: 'explainForm',
   validate
-})(ExplainForm))
+})(withRouter(
+  ExplainForm
+)))

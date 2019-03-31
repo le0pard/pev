@@ -43,7 +43,7 @@ export default class ExplainForm extends React.Component {
             placeholder: 'Execution plan'
           }}
           label="Execution plan"
-          tooltip="JSON execution plan"
+          tooltip={<span>JSON execution plan from<br />'EXPLAIN (ANALYZE, COSTS, VERBOSE, BUFFERS, FORMAT JSON) your-sql-query'</span>}
         />
         <Field
           name="query"

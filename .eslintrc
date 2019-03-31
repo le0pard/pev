@@ -127,7 +127,10 @@
     "react/self-closing-comp": 2,
     "react/sort-comp": 0,
     "react/jsx-wrap-multilines": 2,
-    "import/extensions": [2, "never", {"sass": "always"}]
+    "import/extensions": [2, "never", {"sass": "always"}],
+    "redux-saga/no-yield-in-race": 2,
+    "redux-saga/yield-effects": 2,
+    "redux-saga/no-unhandled-errors": 0
   },
   "globals": {
     "require": true,
@@ -153,6 +156,7 @@
   },
   "plugins": [
     "react",
-    "import"
+    "import",
+    "redux-saga"
   ]
 }

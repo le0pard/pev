@@ -1,7 +1,6 @@
 import {reduxForm} from 'redux-form'
 import {connect} from 'react-redux'
 import ExplainForm from 'components/explainForm'
-import {submitConfiguration} from 'reducers/configuration'
 import {validate} from './validation'
 import {database} from 'database'
 

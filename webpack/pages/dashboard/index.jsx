@@ -1,6 +1,6 @@
 import React from 'react'
 import MainGenerator from 'containers/mainGenerator'
-import pgtuneLogo from './pgtune.svg'
+import pevLogo from './pev.svg'
 
 import './dashboard.sass'
 
@@ -12,7 +12,7 @@ export default class DashboardPage extends React.Component {
           <div className="dashboard-header-logo">
             <img alt="PEV"
               className="dashboard-header-logo__svg"
-              src={pgtuneLogo} />
+              src={pevLogo} />
           </div>
           <div className="dashboard-header-title">
             <h1 className="dashboard-header-title__text">

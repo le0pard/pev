@@ -1,5 +1,5 @@
 import React from 'react'
-import InfoView from 'components/infoView'
+import PlansView from 'containers/plansView'
 import ExplainForm from 'containers/explainForm'
 
 import './main-generator.sass'
@@ -9,13 +9,14 @@ export default class MainGenerator extends React.Component {
     return (
       <div className="main-generator">
         <div className="main-generator-form-wrapper">
-          <h4 className="main-generator-form-subtitle">
-            Parameters of your system
-          </h4>
+          <div>
+            For best results, use <pre><code>EXPLAIN (ANALYZE, COSTS, VERBOSE, BUFFERS, FORMAT JSON)</code></pre>
+            Psql users can export the plan to a file using <pre><code>psql -qAt -f explain.sql > analyze.json</code></pre>
+          </div>
           <ExplainForm />
         </div>
         <div className="main-generator-results-wrapper">
-          <InfoView />
+          <PlansView />
         </div>
       </div>
     )

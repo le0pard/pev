@@ -1,14 +1,14 @@
 import {reduxForm} from 'redux-form'
 import {connect} from 'react-redux'
 import ExplainForm from 'components/explainForm'
+import {requestAddPlan} from 'reducers/plans'
 import {validate} from './validation'
-import {database} from 'database'
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmitForm: (values) => {
-    //dispatch(submitConfiguration(values))
-    console.log(database)
-  }
+  onSubmitForm: (values) => dispatch(requestAddPlan({
+    ...values,
+    content: JSON.parse(values.content)
+  }))
 })
 
 export default connect(

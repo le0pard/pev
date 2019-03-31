@@ -2,14 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Spinner from 'components/spinner'
 import ErrorView from 'components/errorView'
+import PlansViewItem from './item'
 
 export default class PlansView extends React.Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     error: PropTypes.object,
-    plans: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired
-    })),
+    plans: PropTypes.arrayOf(PropTypes.shape(PlansViewItem.propTypes)),
     requestPlansList: PropTypes.func.isRequired
   }
 
@@ -32,7 +31,7 @@ export default class PlansView extends React.Component {
       <div>
         <ul>
           {plans && plans.map((plan) => (
-            <li key={plan.id}>{plan.id}</li>
+            <PlansViewItem {...plan} key={plan.id} />
           ))}
         </ul>
       </div>

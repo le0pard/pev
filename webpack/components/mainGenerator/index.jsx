@@ -9,13 +9,13 @@ export default class MainGenerator extends React.Component {
     return (
       <div className="main-generator">
         <div className="main-generator-form-wrapper">
-          <div>
+          <div className="main-generator-form-description">
             For best results, use <pre><code>EXPLAIN (ANALYZE, COSTS, VERBOSE, BUFFERS, FORMAT JSON)</code></pre>
             Psql users can export the plan to a file using <pre><code>psql -qAt -f explain.sql > analyze.json</code></pre>
           </div>
           <ExplainForm />
         </div>
-        <div className="main-generator-results-wrapper">
+        <div className="main-generator-list-wrapper">
           <PlansView />
         </div>
       </div>

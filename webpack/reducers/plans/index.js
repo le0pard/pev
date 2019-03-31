@@ -3,28 +3,47 @@ import {createAction, createReducer} from 'redux-act'
 
 export const requestPlansList = createAction('Request plans list')
 export const successPlansList = createAction('Success plans list')
-export const errorsPlansList = createAction('Errors plans list')
+export const errorPlansList = createAction('Errors plans list')
 
-const list = createReducer({
+export const requestAddPlan = createAction('Request add plan')
+export const successAddPlan = createAction('Success add plan')
+export const errorAddPlan = createAction('Errors add plan')
+
+const listItems = createReducer({
   [requestPlansList]: () => null,
   [successPlansList]: (state, payload) => payload,
-  [errorsPlansList]: () => null
+  [errorPlansList]: () => null,
+  [successAddPlan]: (state, payload) => [payload].concat(state || [])
 }, null)
 
-const error = createReducer({
+const listError = createReducer({
   [requestPlansList]: () => null,
   [successPlansList]: () => null,
-  [errorsPlansList]: (state, payload) => payload
+  [errorPlansList]: (state, payload) => payload
 }, null)
 
-const loading = createReducer({
+const listLoading = createReducer({
   [requestPlansList]: () => true,
   [successPlansList]: () => false,
-  [errorsPlansList]: () => false
+  [errorPlansList]: () => false
 }, false)
 
+const addLoading = createReducer({
+  [requestAddPlan]: () => true,
+  [successAddPlan]: () => false,
+  [errorAddPlan]: () => false
+}, false)
+
+const addError = createReducer({
+  [requestAddPlan]: () => null,
+  [successAddPlan]: () => null,
+  [errorAddPlan]: (state, payload) => payload
+}, null)
+
 export const reducer = combineReducers({
-  loading,
-  list,
-  error
+  listLoading,
+  listItems,
+  listError,
+  addLoading,
+  addError
 })

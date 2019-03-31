@@ -8,31 +8,6 @@ export default class DBConnector {
   constructor() {
     this.schemaBuilder = lf.schema.create(MAIN_DB_NAME, 1)
     this.createSchema()
-    // this.connection().then((db) => {
-    //   const plansTable = db.getSchema().table(PLANS_TABLE)
-    //   const row = plansTable.createRow({
-    //     content: {
-    //       example: 1,
-    //       test: [1, 2, 3]
-    //     },
-    //     createdAt: new Date()
-    //   })
-    //   db.insert().into(plansTable).values([row]).exec().then(() => {
-    //     db.select()
-    //       .from(plansTable)
-    //       .orderBy(plansTable.createdAt, lf.Order.DESC)
-    //       .limit(PLANS_LIMIT)
-    //       .exec().then((rows) => {
-    //         console.log('rows', rows)
-    //         const lastCreatedAt = rows[rows.length - 1].createdAt
-
-    //         db.delete()
-    //           .from(plansTable)
-    //           .where(plansTable.createdAt.lt(lastCreatedAt))
-    //           .exec()
-    //       })
-    //   })
-    // })
   }
 
   createSchema() {
@@ -86,6 +61,56 @@ export default class DBConnector {
           this.cleanupOldPlans(rows)
           return rows
         })
+    })
+  }
+
+  getPlan(planId) {
+    return this.connection().then((db) => {
+      const plansTable = db.getSchema().table(PLANS_TABLE)
+      return db.select()
+        .from(plansTable)
+        .where(plansTable.id.eq(planId))
+        .exec().then((rows) => {
+          if (rows && rows.length) {
+            return rows[0]
+          } else {
+            return null
+          }
+        })
+    })
+  }
+
+  addPlan(plan) {
+    return this.connection().then((db) => {
+      const plansTable = db.getSchema().table(PLANS_TABLE)
+      const row = plansTable.createRow({
+        ...plan,
+        createdAt: new Date()
+      })
+      return db.insert()
+        .into(plansTable)
+        .values([row])
+        .exec().then((rows) => {
+          if (rows && rows.length) {
+            return rows[0]
+          } else {
+            return null
+          }
+        })
+    })
+  }
+
+  deletePlan(planId) {
+    return this.connection().then((db) => {
+      const plansTable = db.getSchema().table(PLANS_TABLE)
+      return db.delete().from(plansTable).where(plansTable.id.eq(planId)).exec()
+    })
+  }
+
+  cleanupPlans() {
+    return this.connection().then((db) => {
+      const plansTable = db.getSchema().table(PLANS_TABLE)
+      return db.delete().from(plansTable).exec()
     })
   }
 }

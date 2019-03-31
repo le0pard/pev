@@ -20,12 +20,11 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-export default connect(
+export default withRouter(
+connect(
   null,
   mapDispatchToProps
 )(reduxForm({
   form: 'explainForm',
   validate
-})(withRouter(
-  ExplainForm
-)))
+})(ExplainForm)))

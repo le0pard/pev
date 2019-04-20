@@ -48,6 +48,7 @@ export default class DBConnector {
           .exec()
       })
     }
+    return null
   }
 
   getPlans() {

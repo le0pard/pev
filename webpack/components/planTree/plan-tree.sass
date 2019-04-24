@@ -1,0 +1,107 @@
+@import 'variables'
+
+$tree-border-size: 2px
+$tree-object-border: $tree-border-size solid var(--commentColor)
+$tree-object-padding: 10px 20px
+$tree-corner-radius: 6px
+$tree-line-border: $tree-border-size solid $green
+$tree-line-height: 20px
+
+.plan-tree-node
+  border: 2px solid $green
+  word-wrap: break-word
+  word-break: break-all
+
+  &:hover
+    border-color: $blue
+
+.plan-tree-container
+
+  ul
+    display: flex
+    list-style: none
+    padding-left: 0
+    text-align: center
+
+    > li
+      box-sizing: border-box
+      flex: 1
+      padding: 0 5px
+
+      // We'll accept any container that's not a `ul` or `li` because that would just be silly
+      > *:not(ul):not(li)
+        display: inline-block
+        margin: 0 auto
+        padding: $tree-object-padding
+        position: relative
+
+        // We want to add a connector on the bottom of the element unless we've reached the bottom of the tree
+        // which is signified by :last-child
+        &:not(:last-child)
+          &:after
+            border-left: $tree-line-border
+            bottom: $tree-line-height * -1
+            content: ''
+            height: $tree-line-height
+            left: 50%
+            position: absolute
+
+      // We've reached the children elements
+      ul
+        margin-top: $tree-line-height * 2 - $tree-border-size // Fix spacing between borders, no big deal
+        position: relative
+
+        li
+          position: relative
+
+          // The :before will be the horizontal line on the right side of a child connector and the :after
+          // will be the left side of the child connector. The child connector is the vertical line going
+          // down to its children.
+          &:after, &:before
+            border-top: $tree-line-border
+            content: ''
+            position: absolute
+            top: $tree-line-height * -1
+            width: 50%
+
+          &:before
+            border-left: $tree-line-border
+            height: $tree-line-height
+            left: 50%
+
+          &:after
+            right: 50%
+
+          // The first and last children won't have to connect to its siblings to the left and right of it,
+          // so handle that appropriately by hiding
+          &:first-child, &:last-child
+            &:before
+              border-top: $tree-line-border
+              border-top-left-radius: $tree-corner-radius
+              top: $tree-line-height * -1
+
+            &:after
+              border: none
+
+          &:last-child
+            &:before
+              border-left: 0
+              border-right: $tree-line-border
+              border-top-left-radius: 0
+              border-top-right-radius: $tree-corner-radius
+              left: 0
+              right: 50%
+
+          // When it's an only child, there won't be a need to connect to its siblings so just remove the
+          // top border which serves as the horizontal connector
+          &:only-child
+            &:before
+              border-top: none
+              border-top-right-radius: 0
+
+      .plan-tree-node:hover+ul li::after,
+      .plan-tree-node:hover+ul li::before,
+      .plan-tree-node:hover+ul ul::before,
+      .plan-tree-node:hover::after,
+      .plan-tree-node:hover+ul .plan-tree-node::after
+        border-color: black

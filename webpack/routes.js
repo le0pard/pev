@@ -13,7 +13,7 @@ export const routes = [{
       component: Dashboard
     },
     {
-      path: '/plans/:id',
+      path: '/plans/:planID',
       exact: true,
       component: PlanPage
     },

@@ -42,6 +42,34 @@ export default class PlanTree extends React.Component {
                       <ul>
                         <li><div className="plan-tree-node">Great Grand Child</div></li>
                         <li><div className="plan-tree-node">Great Grand Child</div></li>
+                        <li>
+                          <div className="plan-tree-node">Grand Child</div>
+                          <ul>
+                            <li>
+                              <div className="plan-tree-node">Grand Child</div>
+                              <ul>
+                                <li>
+                                  <div className="plan-tree-node">Grand Child</div>
+                                  <ul>
+                                    <li><div className="plan-tree-node">Great Grand Child</div></li>
+                                    <li><div className="plan-tree-node">Great Grand Child</div></li>
+                                  </ul>
+                                </li>
+                                <li><div className="plan-tree-node">Great Grand Child</div></li>
+                                <li><div className="plan-tree-node">Great Grand Child</div></li>
+                              </ul>
+                            </li>
+                            <li><div className="plan-tree-node">Great Grand Child</div></li>
+                            <li><div className="plan-tree-node">Great Grand Child</div></li>
+                            <li>
+                              <div className="plan-tree-node">Grand Child</div>
+                              <ul>
+                                <li><div className="plan-tree-node">Great Grand Child</div></li>
+                                <li><div className="plan-tree-node">Great Grand Child</div></li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
                       </ul>
                     </li>
                   </ul>

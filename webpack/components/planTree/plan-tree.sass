@@ -1,14 +1,16 @@
 @import 'variables'
 
-$tree-border-size: 2px
-$tree-object-border: $tree-border-size solid var(--commentColor)
+$tree-object-border-size: 1px
+$tree-object-border: $tree-object-border-size solid var(--commentColor)
 $tree-object-padding: 10px 20px
 $tree-corner-radius: 6px
-$tree-line-border: $tree-border-size solid $green
+$tree-line-border-size: 2px
+$tree-line-border: $tree-line-border-size solid $green
 $tree-line-height: 20px
 
 .plan-tree-node
-  border: 2px solid $green
+  min-width: 150px
+  border: $tree-object-border
   word-wrap: break-word
   word-break: break-all
 
@@ -16,6 +18,7 @@ $tree-line-height: 20px
     border-color: $blue
 
 .plan-tree-container
+  overflow: auto
 
   ul
     display: flex
@@ -48,7 +51,7 @@ $tree-line-height: 20px
 
       // We've reached the children elements
       ul
-        margin-top: $tree-line-height * 2 - $tree-border-size // Fix spacing between borders, no big deal
+        margin-top: $tree-line-height * 2 - $tree-line-border-size // Fix spacing between borders, no big deal
         position: relative
 
         li
@@ -66,7 +69,7 @@ $tree-line-height: 20px
 
           &:before
             border-left: $tree-line-border
-            height: $tree-line-height
+            height: $tree-line-height - $tree-object-border-size
             left: 50%
 
           &:after
@@ -104,4 +107,4 @@ $tree-line-height: 20px
       .plan-tree-node:hover+ul ul::before,
       .plan-tree-node:hover::after,
       .plan-tree-node:hover+ul .plan-tree-node::after
-        border-color: black
+        border-color: $cyan

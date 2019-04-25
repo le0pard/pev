@@ -5,14 +5,16 @@ $tree-object-border: $tree-object-border-size solid var(--commentColor)
 $tree-object-padding: 10px 20px
 $tree-corner-radius: 6px
 $tree-line-border-size: 2px
-$tree-line-border: $tree-line-border-size solid $green
+$tree-line-border: $tree-line-border-size solid var(--emphColor)
 $tree-line-height: 20px
 
 .plan-tree-node
   min-width: 150px
   border: $tree-object-border
+  background-color: var(--cardBgColor)
   word-wrap: break-word
   word-break: break-all
+  border-radius: 0.25rem
 
   &:hover
     border-color: $blue

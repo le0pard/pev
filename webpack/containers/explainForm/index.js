@@ -1,8 +1,6 @@
-import {reduxForm} from 'redux-form'
 import {connect} from 'react-redux'
 import ExplainForm from 'components/explainForm'
 import {requestAddPlan} from 'reducers/plans'
-import {validate} from './validation'
 import {withRouter} from 'react-router'
 
 const mapDispatchToProps = (dispatch) => ({
@@ -24,7 +22,4 @@ export default withRouter(
 connect(
   null,
   mapDispatchToProps
-)(reduxForm({
-  form: 'explainForm',
-  validate
-})(ExplainForm)))
+)(ExplainForm))

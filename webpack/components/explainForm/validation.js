@@ -11,10 +11,8 @@ export const validate = (values) => {
   const errors = {}
   if (!values.content) {
     errors.content = 'Required'
-  } else {
-    if (!isValidJson(values.content)) {
-      errors.content = 'Invalid JSON'
-    }
+  } else if (!isValidJson(values.content)) {
+    errors.content = 'Invalid JSON'
   }
   return errors
 }

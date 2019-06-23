@@ -5,6 +5,11 @@ export const requestPlansList = createAction('Request plans list')
 export const successPlansList = createAction('Success plans list')
 export const errorPlansList = createAction('Errors plans list')
 
+export const requestPlan = createAction('Request plan')
+export const successPlan = createAction('Success plan')
+export const errorPlan = createAction('Errors plan')
+export const resetPlan = createAction('Reset plan')
+
 export const requestAddPlan = createAction('Request add plan')
 export const successAddPlan = createAction('Success add plan')
 export const errorAddPlan = createAction('Errors add plan')
@@ -28,6 +33,27 @@ const listLoading = createReducer({
   [errorPlansList]: () => false
 }, false)
 
+const planLoading = createReducer({
+  [requestPlan]: () => true,
+  [successPlan]: () => false,
+  [errorPlan]: () => false,
+  [resetPlan]: () => false
+}, false)
+
+const plan = createReducer({
+  [requestPlan]: () => null,
+  [successPlan]: (state, payload) => payload,
+  [errorPlan]: () => null,
+  [resetPlan]: () => null
+}, null)
+
+const planError = createReducer({
+  [requestPlan]: () => null,
+  [successPlan]: () => null,
+  [errorPlan]: (state, payload) => payload,
+  [resetPlan]: () => null
+}, null)
+
 const addLoading = createReducer({
   [requestAddPlan]: () => true,
   [successAddPlan]: () => false,
@@ -44,6 +70,9 @@ export const reducer = combineReducers({
   listLoading,
   listItems,
   listError,
+  planLoading,
+  plan,
+  planError,
   addLoading,
   addError
 })

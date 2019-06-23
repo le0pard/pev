@@ -9,18 +9,41 @@ export default class PlanTree extends React.Component {
   static propTypes = {
     planID: PropTypes.string.isRequired,
     loading: PropTypes.bool.isRequired,
-    error: PropTypes.object
+    error: PropTypes.object,
+    plan: PropTypes.object,
+    requestPlan: PropTypes.func.isRequired,
+    resetPlan: PropTypes.func.isRequired
+  }
+
+  componentDidMount() {
+    const {planID} = this.props
+    const id = parseInt(planID, 10)
+    if (!isNaN(id)) {
+      this.props.requestPlan({id})
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.resetPlan()
   }
 
   render() {
-    const {loading, error, planID} = this.props
+    const {loading, error, plan, planID} = this.props
 
     if (loading) {
       return (<Spinner />)
     }
 
     if (error) {
-      return (<ErrorView message={error.toString()} />)
+      return (<ErrorView message={error.message} />)
+    }
+
+    if (isNaN(parseInt(planID, 10))) {
+      return (<ErrorView message="Invalid plan ID" />)
+    }
+
+    if (!plan) {
+      return null
     }
 
     return (
@@ -29,7 +52,7 @@ export default class PlanTree extends React.Component {
           <ul>
             <li>
               <div className="plan-tree-node">
-                Plan ID: {planID}
+                Plan ID: {plan.id}
               </div>
               <ul>
                 <li>

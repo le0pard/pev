@@ -19,7 +19,8 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default withRouter(
-connect(
-  null,
-  mapDispatchToProps
-)(ExplainForm))
+  connect(
+    null,
+    mapDispatchToProps
+  )(ExplainForm)
+)

@@ -7,22 +7,20 @@ import './textarea.sass'
 
 export default class FormTextarea extends React.Component {
   static propTypes = {
-    input: PropTypes.object.isRequired,
     label: PropTypes.string.isRequired,
     tooltip: PropTypes.oneOfType([
       PropTypes.node,
       PropTypes.func,
       PropTypes.string
     ]).isRequired,
-    textareaProps: PropTypes.object,
-    meta: PropTypes.shape({
-      touched: PropTypes.bool.isRequired,
-      error: PropTypes.string
+    field: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      value: PropTypes.any
+    }).isRequired,
+    form: PropTypes.shape({
+      touched: PropTypes.object,
+      errors: PropTypes.object
     }).isRequired
-  }
-
-  static defaultProps = {
-    textareaProps: {}
   }
 
   render() {
@@ -30,12 +28,16 @@ export default class FormTextarea extends React.Component {
       label,
       input,
       tooltip,
-      textareaProps,
-      meta: {touched, error}
+      field,
+      form: {
+        touched,
+        errors
+      },
+      ...props
     } = this.props
 
-    const textareaID = _camelCase(`${input.name}-id`)
-    const isError = touched && error
+    const textareaID = _camelCase(`${field.name}-id`)
+    const isError = touched[field.name] && errors[field.name]
 
     return (
       <div className="form-textarea">
@@ -49,13 +51,13 @@ export default class FormTextarea extends React.Component {
           className="form-textarea-tooltip" />
         <div className="form-textarea-wrapper">
           <textarea
-            {...input}
-            {...textareaProps}
+            {...field}
+            {...props}
             className="form-textarea-wrapper__input"
             aria-label={label}
             aria-describedby={`tooltip${textareaID}Content`}
             id={textareaID} />
-          {isError && <div className="form-textarea-error">{error}</div>}
+          {isError && <div className="form-textarea-error">{errors[field.name]}</div>}
         </div>
       </div>
     )

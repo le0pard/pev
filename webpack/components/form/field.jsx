@@ -7,22 +7,20 @@ import './field.sass'
 
 export default class FormField extends React.Component {
   static propTypes = {
-    input: PropTypes.object.isRequired,
     label: PropTypes.string.isRequired,
     tooltip: PropTypes.oneOfType([
       PropTypes.node,
       PropTypes.func,
       PropTypes.string
     ]).isRequired,
-    inputProps: PropTypes.object,
-    meta: PropTypes.shape({
-      touched: PropTypes.bool.isRequired,
-      error: PropTypes.string
-    }).isRequired
-  }
-
-  static defaultProps = {
-    inputProps: {}
+    field: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      value: PropTypes.any
+    }).isRequired,
+    form: PropTypes.shape({
+      touched: PropTypes.object,
+      errors: PropTypes.object
+    }).isRequired,
   }
 
   render() {
@@ -30,12 +28,16 @@ export default class FormField extends React.Component {
       label,
       input,
       tooltip,
-      inputProps,
-      meta: {touched, error}
+      field,
+      form: {
+        touched,
+        errors
+      },
+      ...props
     } = this.props
 
-    const inputID = _camelCase(`${input.name}-id`)
-    const isError = touched && error
+    const inputID = _camelCase(`${field.name}-id`)
+    const isError = touched[field.name] && errors[field.name]
 
     return (
       <div className="form-field">
@@ -49,13 +51,13 @@ export default class FormField extends React.Component {
           className="form-field-tooltip" />
         <div className="form-field-wrapper">
           <input
-            {...input}
-            {...inputProps}
+            {...field}
+            {...props}
             className="form-field-wrapper__input"
             aria-label={label}
             aria-describedby={`tooltip${inputID}Content`}
             id={inputID} />
-          {isError && <div className="form-field-error">{error}</div>}
+          {isError && <div className="form-field-error">{errors[field.name]}</div>}
         </div>
       </div>
     )

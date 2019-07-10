@@ -1,19 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  PlanParser,
-  NODE_TYPE_PROP,
-  MAXIMUM_DURATION_PROP,
-  MAXIMUM_ROWS_PROP,
-  MAXIMUM_COSTS_PROP
-} from 'lib/planParser'
+import {PlanParser} from 'lib/planParser'
+import PlanTreeInfo from './info'
+import PlanTreeNode from './node'
 import Spinner from 'components/spinner'
 import ErrorView from 'components/errorView'
 
 import './plan-tree.sass'
-
-const EXECUTION_TIME_PROP = 'Execution Time'
-const PLANNING_TIME_PROP = 'Planning Time'
 
 export default class PlanTree extends React.Component {
   static propTypes = {
@@ -29,8 +22,6 @@ export default class PlanTree extends React.Component {
     super(props)
 
     this.renderNode = this.renderNode.bind(this)
-    this.renderNodeInfo = this.renderNodeInfo.bind(this)
-    this.renderPlanInfo = this.renderPlanInfo.bind(this)
   }
 
   componentDidMount() {
@@ -45,45 +36,10 @@ export default class PlanTree extends React.Component {
     this.props.resetPlan()
   }
 
-  renderPlanInfo(plan) {
-    return (
-      <div className="plan-stats">
-        <div>
-          <span className="stat-value">{plan[EXECUTION_TIME_PROP]}</span>
-          <span className="stat-label">execution time (ms)</span>
-        </div>
-        <div>
-          <span className="stat-value">{plan[PLANNING_TIME_PROP]}</span>
-          <span className="stat-label">planning time (ms)</span>
-        </div>
-        <div>
-          <span className="stat-value">{plan[MAXIMUM_DURATION_PROP]}</span>
-          <span className="stat-label">slowest node (ms)</span>
-        </div>
-        <div>
-          <span className="stat-value">{plan[MAXIMUM_ROWS_PROP]}</span>
-          <span className="stat-label">largest node (rows)</span>
-        </div>
-        <div>
-          <span className="stat-value">{plan[MAXIMUM_COSTS_PROP]}</span>
-          <span className="stat-label">costliest node</span>
-        </div>
-      </div>
-    )
-  }
-
-  renderNodeInfo(node) {
-    return (
-      <div className="plan-tree-node">
-        {node[NODE_TYPE_PROP]}
-      </div>
-    )
-  }
-
   renderNode(node, index = 0) {
     return (
       <li key={index}>
-        {this.renderNodeInfo(node)}
+        <PlanTreeNode node={node} />
         {
           node.Plans &&
           Array.isArray(node.Plans) &&
@@ -119,7 +75,7 @@ export default class PlanTree extends React.Component {
 
     return (
       <div>
-        {this.renderPlanInfo(planJSON)}
+        <PlanTreeInfo plan={planJSON} />
         <div className="plan-tree-container">
           <ul>
             {this.renderNode(planJSON.Plan)}

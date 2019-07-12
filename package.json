@@ -37,7 +37,7 @@
     "eslint-plugin-redux-saga": "^1.0.0",
     "fbjs": "1.0.0",
     "file-loader": "4.0.0",
-    "formik": "^1.5.7",
+    "formik": "1.5.8",
     "history": "4.9.0",
     "lodash": "4.17.14",
     "lost": "8.3.1",
@@ -150,7 +150,6 @@
     "gulp": "4.0.2",
     "gulp-eslint": "6.0.0",
     "gulp-jest": "4.0.2",
-    "gulp-util": "^3.0.8",
     "jest": "24.8.0",
     "jest-cli": "24.8.0",
     "webpack-cli": "3.3.5"

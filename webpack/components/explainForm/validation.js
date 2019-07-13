@@ -9,7 +9,7 @@ export const validationSchema = Yup.object().shape({
     .required('Required')
     .test({
       name: 'isJSON',
-      exclusive: true,
+      exclusive: false,
       message: 'Invalid JSON',
       test: (value) => {
         try {

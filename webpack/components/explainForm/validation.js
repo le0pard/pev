@@ -1,18 +1,23 @@
-const isValidJson = (content) => {
-  try {
-    JSON.parse(content)
-    return true
-  } catch (e) {
-    return false
-  }
-}
+import * as Yup from 'yup'
 
-export const validate = (values) => {
-  const errors = {}
-  if (!values.content) {
-    errors.content = 'Required'
-  } else if (!isValidJson(values.content)) {
-    errors.content = 'Invalid JSON'
-  }
-  return errors
-}
+export const validationSchema = Yup.object().shape({
+  name: Yup.string()
+    .notRequired(),
+  query: Yup.string()
+    .notRequired(),
+  content: Yup.string()
+    .required('Required')
+    .test({
+      name: 'isJSON',
+      exclusive: true,
+      message: 'Invalid JSON',
+      test: (value) => {
+        try {
+          JSON.parse(value)
+          return true
+        } catch (e) {
+          return false
+        }
+      },
+    })
+})

@@ -74,13 +74,14 @@ export default class PlanTree extends React.Component {
     const planJSON = PlanParser.parse(plan.content)
 
     return (
-      <div>
+      <div className="plan-tree-wrapper">
         <PlanTreeInfo plan={planJSON} />
         <div className="plan-tree-container">
           <ul>
             {this.renderNode(planJSON.Plan)}
           </ul>
         </div>
+        <div className="plan-tree-sidebar">Sidebar</div>
       </div>
     )
   }

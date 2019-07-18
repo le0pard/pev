@@ -18,7 +18,7 @@ export const validationSchema = Yup.object().shape({
         } catch (e) {
           return false
         }
-      },
+      }
     })
     .test({
       name: 'isPlanJSON',
@@ -37,6 +37,6 @@ export const validationSchema = Yup.object().shape({
         } catch (e) {
           return false
         }
-      },
+      }
     })
 })

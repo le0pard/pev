@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import dayjs from 'dayjs'
 import {PlanParser} from 'lib/planParser'
 import PlanTreeInfo from './info'
 import PlanTreeNode from './node'
@@ -36,20 +37,28 @@ export default class PlanTree extends React.Component {
     this.props.resetPlan()
   }
 
-  renderNode(node, index = 0) {
+  renderNode(plan, node, index = 0) {
     return (
       <li key={index}>
-        <PlanTreeNode node={node} />
+        <PlanTreeNode plan={plan} node={node} />
         {
           node.Plans &&
           Array.isArray(node.Plans) &&
           node.Plans.length &&
           <ul>
-            {node.Plans.map(this.renderNode)}
+            {node.Plans.map((n, i) => this.renderNode(plan, n, i))}
           </ul>
         }
       </li>
     )
+  }
+
+  getTitle(plan) {
+    if (plan.name && plan.name.length) {
+      return plan.name
+    } else {
+      return dayjs(plan.createdAt).format('YYYY-MM-DD HH:mm:ss')
+    }
   }
 
   render() {
@@ -75,13 +84,21 @@ export default class PlanTree extends React.Component {
 
     return (
       <div className="plan-tree-wrapper">
-        <PlanTreeInfo plan={planJSON} />
+        <div className="plan-tree-info">
+          <h2>{this.getTitle(plan)}</h2>
+          <PlanTreeInfo plan={planJSON} />
+        </div>
+        <div className="plan-tree-settings">
+          Settings
+        </div>
         <div className="plan-tree-container">
           <ul>
-            {this.renderNode(planJSON.Plan)}
+            {this.renderNode(planJSON, planJSON.Plan)}
           </ul>
         </div>
-        <div className="plan-tree-sidebar">Sidebar</div>
+        <div className="plan-tree-sidebar">
+          Sidebar
+        </div>
       </div>
     )
   }

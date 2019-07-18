@@ -33,6 +33,7 @@
     "create-react-context": "0.3.0",
     "css-loader": "3.0.0",
     "cssnano": "4.1.10",
+    "dayjs": "^1.8.15",
     "del": "5.0.0",
     "eslint-plugin-redux-saga": "^1.0.0",
     "fbjs": "1.0.0",

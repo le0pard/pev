@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 import {
   MAXIMUM_DURATION_PROP,
   MAXIMUM_ROWS_PROP,
-  MAXIMUM_COSTS_PROP
+  MAXIMUM_COSTS_PROP,
+  EXECUTION_TIME_PROP,
+  PLANNING_TIME_PROP
 } from 'lib/planParser'
-
-const EXECUTION_TIME_PROP = 'Execution Time'
-const PLANNING_TIME_PROP = 'Planning Time'
 
 export default class PlanTreeInfo extends React.Component {
   static propTypes = {

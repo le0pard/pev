@@ -1,11 +1,11 @@
-import {fork} from 'redux-saga/effects'
+import {all, fork} from 'redux-saga/effects'
 
 import {watch as watchPlans} from './plans'
 
 function* rootSaga() {
-  yield [
+  yield all([
     fork(watchPlans)
-  ]
+  ])
 }
 
 export default rootSaga

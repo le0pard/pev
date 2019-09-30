@@ -20,13 +20,12 @@ export default class FormField extends React.Component {
     form: PropTypes.shape({
       touched: PropTypes.object,
       errors: PropTypes.object
-    }).isRequired,
+    }).isRequired
   }
 
   render() {
     const {
       label,
-      input,
       tooltip,
       field,
       form: {

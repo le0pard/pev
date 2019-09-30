@@ -26,7 +26,6 @@ export default class FormTextarea extends React.Component {
   render() {
     const {
       label,
-      input,
       tooltip,
       field,
       form: {

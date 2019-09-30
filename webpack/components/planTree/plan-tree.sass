@@ -8,6 +8,21 @@ $tree-line-border-size: 2px
 $tree-line-border: $tree-line-border-size solid var(--emphColor)
 $tree-line-height: 20px
 
+.plan-tree-wrapper
+  display: grid
+  grid-gap: 10px
+  grid-template-columns: 1fr 300px
+  grid-template-areas: "info settings" "content sidebar"
+
+.plan-tree-settings
+  grid-area: settings
+
+.plan-tree-info
+  grid-area: info
+
+.plan-tree-sidebar
+  grid-area: sidebar
+
 .plan-tree-node
   min-width: 150px
   border: $tree-object-border
@@ -20,6 +35,7 @@ $tree-line-height: 20px
 
 .plan-tree-container
   overflow: auto
+  grid-area: content
 
   ul
     display: flex

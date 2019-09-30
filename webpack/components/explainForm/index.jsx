@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import {Formik, Field, Form} from 'formik'
 import FormField from 'components/form/field'
 import FormTextarea from 'components/form/textarea'
-import {validate} from './validation'
+import {validationSchema} from './validation'
 
 import './explain-form.sass'
 
@@ -26,7 +26,7 @@ export default class ExplainForm extends React.Component {
     return (
       <Formik
         onSubmit={this.handleGenerateConfig.bind(this)}
-        validate={validate}
+        validationSchema={validationSchema}
         render={({isSubmitting}) => (
           <Form>
             <Field

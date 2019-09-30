@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
-import _padStart from 'lodash/padStart'
+import dayjs from 'dayjs'
 
 export default class PlansViewItem extends React.Component {
   static propTypes = {
@@ -15,19 +15,7 @@ export default class PlansViewItem extends React.Component {
     if (name && name.length) {
       return name
     } else {
-      return [
-        createdAt.getFullYear(),
-        '-',
-        _padStart(createdAt.getMonth() + 1, 2, '0'),
-        '-',
-        _padStart(createdAt.getDate(), 2, '0'),
-        ' ',
-        _padStart(createdAt.getHours(), 2, '0'),
-        ':',
-        _padStart(createdAt.getMinutes(), 2, '0'),
-        ':',
-        _padStart(createdAt.getSeconds(), 2, '0')
-      ].join('')
+      return dayjs(createdAt).format('YYYY-MM-DD HH:mm:ss')
     }
   }
 

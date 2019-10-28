@@ -8,6 +8,12 @@ import {validationSchema} from './validation'
 
 import './explain-form.sass'
 
+const INITIAL_VALUES = {
+  name: '',
+  content: '',
+  query: ''
+}
+
 export default class ExplainForm extends React.Component {
   static propTypes = {
     onSubmitForm: PropTypes.func.isRequired,
@@ -25,9 +31,10 @@ export default class ExplainForm extends React.Component {
   render() {
     return (
       <Formik
+        initialValues={INITIAL_VALUES}
         onSubmit={this.handleGenerateConfig.bind(this)}
         validationSchema={validationSchema}
-        render={({isSubmitting}) => (
+      >{({isSubmitting}) => (
           <Form>
             <Field
               name="name"
@@ -63,7 +70,7 @@ export default class ExplainForm extends React.Component {
             </div>
           </Form>
         )}
-      />
+      </Formik>
     )
   }
 }

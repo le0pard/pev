@@ -80,7 +80,8 @@ export default class PlanTree extends React.Component {
       return null
     }
 
-    const planJSON = PlanParser.parse(plan.content)
+    const planParser = new PlanParser()
+    const planJSON = planParser.parse(plan.content)
 
     return (
       <div className="plan-tree-wrapper">

@@ -5,6 +5,7 @@ import {
   NODE_TYPE_PROP,
   EXECUTION_TIME_PROP,
   RELATION_NAME_PROP,
+  PLANS_PROP,
   SCHEMA_PROP,
   ALIAS_PROP,
   GROUP_KEY_PROP,
@@ -17,6 +18,7 @@ import {
   COSTLIEST_NODE_PROP,
   LARGEST_NODE_PROP
 } from 'lib/planParser'
+import _omit from 'lodash/omit'
 import _round from 'lodash/round'
 
 export default class PlanTreeNode extends React.Component {
@@ -89,13 +91,11 @@ export default class PlanTreeNode extends React.Component {
 
   render() {
     const {plan, node} = this.props
-    const durationInPercentage = _round(node[ACTUAL_DURATION_PROP] / plan[EXECUTION_TIME_PROP] * 100)
 
     return (
       <div className="plan-tree-node">
         <p>{node[NODE_TYPE_PROP]}</p>
-        <p>Duration: {durationInPercentage}%</p>
-        <p>Duration: {_round(node[ACTUAL_DURATION_PROP], 2)}ms</p>
+        <p>{JSON.stringify(_omit(node, [PLANS_PROP]))}</p>
         <div>
           {this.renderRelation(node)}
         </div>

@@ -170,29 +170,6 @@ export class PlanParser {
     return duration
   }
 
-  findOutlierNodes(node) {
-    node[SLOWEST_NODE_PROP] = false
-    node[LARGEST_NODE_PROP] = false
-    node[COSTLIEST_NODE_PROP] = false
-
-    if (node[ACTUAL_COST_PROP] === this.maxCost) {
-      node[COSTLIEST_NODE_PROP] = true
-    }
-    if (node[ACTUAL_ROWS_PROP] === this.maxRows) {
-      node[LARGEST_NODE_PROP] = true
-    }
-    if (node[ACTUAL_DURATION_PROP] === this.maxDuration) {
-      node[SLOWEST_NODE_PROP] = true
-    }
-
-    Object.keys(node).forEach((key) => {
-      const value = node[key]
-      if (key === PLANS_PROP && Array.isArray(value)) {
-        value.forEach((child) => this.findOutlierNodes(child))
-      }
-    })
-  }
-
   // figure out order of magnitude by which the planner mis-estimated how many rows would be
   // invloved in this node
   calculatePlannerEstimate (node) {

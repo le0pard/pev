@@ -172,7 +172,7 @@ export class PlanParser {
 
   // figure out order of magnitude by which the planner mis-estimated how many rows would be
   // invloved in this node
-  calculatePlannerEstimate (node) {
+  calculatePlannerEstimate(node) {
     if (!node[ACTUAL_ROWS_PROP]) {
       return;
     }

@@ -3,7 +3,12 @@ import PropTypes from 'prop-types'
 import {
   ACTUAL_DURATION_PROP,
   NODE_TYPE_PROP,
+  ACTUAL_LOOPS_PROP,
+  ACTUAL_TOTAL_TIME_PROP,
   EXECUTION_TIME_PROP,
+  TOTAL_COST_PROP,
+  ACTUAL_COST_PROP,
+  MAXIMUM_DURATION_PROP,
   RELATION_NAME_PROP,
   PLANS_PROP,
   SCHEMA_PROP,
@@ -16,7 +21,11 @@ import {
   CTE_NAME_PROP,
   SLOWEST_NODE_PROP,
   COSTLIEST_NODE_PROP,
-  LARGEST_NODE_PROP
+  LARGEST_NODE_PROP,
+  PLANNER_ESTIMATE_DIRECTION_PROP,
+  PLANNER_ESTIMATE_FACTOR_PROP,
+  ESTIMATE_DIRECTION_OVER,
+  ESTIMATE_DIRECTION_UNDER
 } from 'lib/planParser'
 import _omit from 'lodash/omit'
 import _round from 'lodash/round'
@@ -91,14 +100,55 @@ export default class PlanTreeNode extends React.Component {
 
   render() {
     const {plan, node} = this.props
+    const executionTime = plan.Plan[EXECUTION_TIME_PROP] || plan.Plan[ACTUAL_TOTAL_TIME_PROP]
+    const executionTimePercent = _round((node[ACTUAL_DURATION_PROP] / executionTime) * 100)
+    const isNeverExecuted = plan.Plan[EXECUTION_TIME_PROP] && !node[ACTUAL_LOOPS_PROP]
+    const durationPersentage = _round(node[ACTUAL_DURATION_PROP] / plan[MAXIMUM_DURATION_PROP] * 100)
+
+    const planCost = plan.Plan[TOTAL_COST_PROP]
+    const costPercent = _round((node[ACTUAL_COST_PROP] / planCost) * 100)
+
+    const plannerRowEstimateDirection = node[PLANNER_ESTIMATE_DIRECTION_PROP]
+    const plannerRowEstimateValue = node[PLANNER_ESTIMATE_FACTOR_PROP]
 
     return (
       <div className="plan-tree-node">
         <p>{node[NODE_TYPE_PROP]}</p>
-        <p>{JSON.stringify(_omit(node, [PLANS_PROP]))}</p>
+        {
+          node[ACTUAL_DURATION_PROP] &&
+          <p>Duration: {node[ACTUAL_DURATION_PROP]}</p>
+        }
+        {
+          executionTimePercent &&
+          <p>Percentage: {executionTimePercent}</p>
+        }
+        {
+          durationPersentage &&
+          <p>Duration Percentage: {durationPersentage}</p>
+        }
+        {
+          isNeverExecuted &&
+          <p>Never Executed</p>
+        }
         <div>
           {this.renderRelation(node)}
         </div>
+        {
+          node[ACTUAL_COST_PROP] &&
+          <p>Cost: {node[ACTUAL_COST_PROP]} ({costPercent}%)</p>
+        }
+        {
+          plannerRowEstimateDirection === ESTIMATE_DIRECTION_OVER &&
+          <p>over estimated rows</p>
+        }
+        {
+          plannerRowEstimateDirection === ESTIMATE_DIRECTION_UNDER &&
+          <p>under estimated rows</p>
+        }
+        {
+          plannerRowEstimateValue &&
+          <p>by {plannerRowEstimateValue}</p>
+        }
         {node[SLOWEST_NODE_PROP] && <div>SLOWEST</div>}
         {node[COSTLIEST_NODE_PROP] && <div>COSTLIEST</div>}
         {node[LARGEST_NODE_PROP] && <div>LARGEST</div>}

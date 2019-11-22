@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import ScrollContainer from 'react-indiana-drag-scroll'
 import dayjs from 'dayjs'
 import {PlanParser} from 'lib/planParser'
 import PlanTreeInfo from './info'
 import PlanTreeNode from './node'
+import PlanTreeNodeInfo from './nodeInfo'
 import Spinner from 'components/spinner'
 import ErrorView from 'components/errorView'
 
@@ -15,7 +17,9 @@ export default class PlanTree extends React.Component {
     loading: PropTypes.bool.isRequired,
     error: PropTypes.object,
     plan: PropTypes.object,
+    selectedNode: PropTypes.object,
     requestPlan: PropTypes.func.isRequired,
+    showPlanNodeInfo: PropTypes.func.isRequired,
     resetPlan: PropTypes.func.isRequired
   }
 
@@ -37,16 +41,21 @@ export default class PlanTree extends React.Component {
     this.props.resetPlan()
   }
 
-  renderNode(plan, node, index = 0) {
+  renderNode(plan, node, selectedNode, showPlanNodeInfo, index = 0) {
     return (
       <li key={index}>
-        <PlanTreeNode plan={plan} node={node} />
+        <PlanTreeNode
+          plan={plan}
+          node={node}
+          isSeleted={!!selectedNode && selectedNode === node}
+          onClick={() => showPlanNodeInfo(node)}
+        />
         {
           node.Plans &&
           Array.isArray(node.Plans) &&
           node.Plans.length &&
           <ul>
-            {node.Plans.map((n, i) => this.renderNode(plan, n, i))}
+            {node.Plans.map((n, i) => this.renderNode(plan, n, selectedNode, showPlanNodeInfo, i))}
           </ul>
         }
       </li>
@@ -62,7 +71,14 @@ export default class PlanTree extends React.Component {
   }
 
   render() {
-    const {loading, error, plan, planID} = this.props
+    const {
+      loading,
+      error,
+      plan,
+      planID,
+      selectedNode,
+      showPlanNodeInfo
+    } = this.props
 
     if (loading) {
       return (<Spinner />)
@@ -92,13 +108,13 @@ export default class PlanTree extends React.Component {
         <div className="plan-tree-settings">
           Settings
         </div>
-        <div className="plan-tree-container">
+        <ScrollContainer className="plan-tree-container plan-tree-drag-cursor">
           <ul>
-            {this.renderNode(planJSON, planJSON.Plan)}
+            {this.renderNode(planJSON, planJSON.Plan, selectedNode, showPlanNodeInfo)}
           </ul>
-        </div>
+        </ScrollContainer>
         <div className="plan-tree-sidebar">
-          Sidebar
+          {selectedNode && <PlanTreeNodeInfo plan={planJSON} node={selectedNode} />}
         </div>
       </div>
     )

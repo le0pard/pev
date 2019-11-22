@@ -33,9 +33,16 @@ $tree-line-height: 20px
   &:hover
     border-color: $blue
 
+.plan-tree-drag-cursor
+  cursor: grab
+
+  &:active
+    cursor: grabbing
+
 .plan-tree-container
   overflow: auto
   grid-area: content
+  font-size: 0.85rem
 
   ul
     display: flex

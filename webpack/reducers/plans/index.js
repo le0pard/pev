@@ -10,6 +10,8 @@ export const successPlan = createAction('Success plan')
 export const errorPlan = createAction('Errors plan')
 export const resetPlan = createAction('Reset plan')
 
+export const showPlanNodeInfo = createAction('Show plan node info')
+
 export const requestAddPlan = createAction('Request add plan')
 export const successAddPlan = createAction('Success add plan')
 export const errorAddPlan = createAction('Errors add plan')
@@ -47,6 +49,12 @@ const plan = createReducer({
   [resetPlan]: () => null
 }, null)
 
+const selectedNode = createReducer({
+  [requestPlan]: () => null,
+  [showPlanNodeInfo]: (state, payload) => payload,
+  [resetPlan]: () => null
+}, null)
+
 const planError = createReducer({
   [requestPlan]: () => null,
   [successPlan]: () => null,
@@ -72,6 +80,7 @@ export const reducer = combineReducers({
   listError,
   planLoading,
   plan,
+  selectedNode,
   planError,
   addLoading,
   addError

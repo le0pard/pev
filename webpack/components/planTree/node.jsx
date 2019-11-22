@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import {
   ACTUAL_DURATION_PROP,
   NODE_TYPE_PROP,
@@ -10,7 +11,6 @@ import {
   ACTUAL_COST_PROP,
   MAXIMUM_DURATION_PROP,
   RELATION_NAME_PROP,
-  PLANS_PROP,
   SCHEMA_PROP,
   ALIAS_PROP,
   GROUP_KEY_PROP,
@@ -33,7 +33,9 @@ import _round from 'lodash/round'
 export default class PlanTreeNode extends React.Component {
   static propTypes = {
     plan: PropTypes.object.isRequired,
-    node: PropTypes.object.isRequired
+    node: PropTypes.object.isRequired,
+    isSeleted: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired
   }
 
   stringifyValue(value) {
@@ -99,7 +101,7 @@ export default class PlanTreeNode extends React.Component {
   }
 
   render() {
-    const {plan, node} = this.props
+    const {plan, node, isSeleted, onClick} = this.props
     const executionTime = plan.Plan[EXECUTION_TIME_PROP] || plan.Plan[ACTUAL_TOTAL_TIME_PROP]
     const executionTimePercent = _round((node[ACTUAL_DURATION_PROP] / executionTime) * 100)
     const isNeverExecuted = plan.Plan[EXECUTION_TIME_PROP] && !node[ACTUAL_LOOPS_PROP]
@@ -112,8 +114,14 @@ export default class PlanTreeNode extends React.Component {
     const plannerRowEstimateValue = node[PLANNER_ESTIMATE_FACTOR_PROP]
 
     return (
-      <div className="plan-tree-node">
-        <p>{node[NODE_TYPE_PROP]}</p>
+      <div className={classnames('plan-tree-node', {
+        'plan-tree-node--selected': isSeleted
+      })}>
+        <p>
+          <button onClick={onClick}>
+            {node[NODE_TYPE_PROP]}
+          </button>
+        </p>
         {
           node[ACTUAL_DURATION_PROP] &&
           <p>Duration: {node[ACTUAL_DURATION_PROP]}</p>

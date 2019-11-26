@@ -2549,6 +2549,7 @@ export default class PlanTreeFlamegraph extends React.Component {
       .minFrameSize(5)
       .transitionEase(easeCubic)
       .differential(false)
+      .selfValue(false)
       .onClick(onClick)
     select(this.myFlamegraphEl.current)
       .datum(exampleData)

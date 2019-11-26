@@ -4,10 +4,12 @@ import ScrollContainer from 'react-indiana-drag-scroll'
 import dayjs from 'dayjs'
 import {PlanParser} from 'lib/planParser'
 import PlanTreeInfo from './info'
-import PlanTreeNode from './node'
+import PlanTreeGraph from './graph'
+import PlanTreeFlamegraph from './flamegraph'
 import PlanTreeNodeInfo from './nodeInfo'
 import Spinner from 'components/spinner'
 import ErrorView from 'components/errorView'
+import {GRAPH_VIEW, FLAMEGRAPH_VIEW} from 'reducers/settings/constants'
 
 import './plan-tree.sass'
 
@@ -23,12 +25,6 @@ export default class PlanTree extends React.Component {
     resetPlan: PropTypes.func.isRequired
   }
 
-  constructor(props) {
-    super(props)
-
-    this.renderNode = this.renderNode.bind(this)
-  }
-
   componentDidMount() {
     const {planID} = this.props
     const id = parseInt(planID, 10)
@@ -41,26 +37,6 @@ export default class PlanTree extends React.Component {
     this.props.resetPlan()
   }
 
-  renderNode(plan, node, selectedNode, showPlanNodeInfo, index = 0) {
-    return (
-      <li key={index}>
-        <PlanTreeNode
-          plan={plan}
-          node={node}
-          isSeleted={!!selectedNode && selectedNode === node}
-          onClick={() => showPlanNodeInfo(node)}
-        />
-        {
-          node.Plans &&
-          Array.isArray(node.Plans) &&
-          node.Plans.length &&
-          <ul>
-            {node.Plans.map((n, i) => this.renderNode(plan, n, selectedNode, showPlanNodeInfo, i))}
-          </ul>
-        }
-      </li>
-    )
-  }
 
   getTitle(plan) {
     if (plan.name && plan.name.length) {
@@ -77,7 +53,9 @@ export default class PlanTree extends React.Component {
       plan,
       planID,
       selectedNode,
-      showPlanNodeInfo
+      showPlanNodeInfo,
+      planView,
+      changePlanView
     } = this.props
 
     if (loading) {
@@ -106,12 +84,26 @@ export default class PlanTree extends React.Component {
           <PlanTreeInfo plan={planJSON} />
         </div>
         <div className="plan-tree-settings">
-          Settings
+          <button onClick={
+            () => changePlanView(planView === GRAPH_VIEW ? FLAMEGRAPH_VIEW : GRAPH_VIEW)
+          }>Toggle View</button>
         </div>
         <ScrollContainer className="plan-tree-container plan-tree-drag-cursor">
-          <ul>
-            {this.renderNode(planJSON, planJSON.Plan, selectedNode, showPlanNodeInfo)}
-          </ul>
+          {
+            planView === FLAMEGRAPH_VIEW ?
+            <PlanTreeFlamegraph
+              plan={planJSON}
+              node={planJSON.Plan}
+              selectedNode={selectedNode}
+              showPlanNodeInfo={showPlanNodeInfo}
+            /> :
+            <PlanTreeGraph
+              plan={planJSON}
+              node={planJSON.Plan}
+              selectedNode={selectedNode}
+              showPlanNodeInfo={showPlanNodeInfo}
+            />
+          }
         </ScrollContainer>
         <div className="plan-tree-sidebar">
           {selectedNode && <PlanTreeNodeInfo plan={planJSON} node={selectedNode} />}

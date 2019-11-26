@@ -33,6 +33,7 @@
     "create-react-context": "0.3.0",
     "css-loader": "3.2.0",
     "cssnano": "4.1.10",
+    "d3": "^5.14.2",
     "d3-flame-graph": "2.1.8",
     "dayjs": "1.8.17",
     "del": "5.1.0",

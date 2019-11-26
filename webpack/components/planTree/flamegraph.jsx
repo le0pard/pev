@@ -2557,6 +2557,8 @@ export default class PlanTreeFlamegraph extends React.Component {
 
   componentWillUnmount() {
     if (this.fgObject) {
+      this.fgObject.resetZoom()
+      this.fgObject.clear()
       this.fgObject.destroy()
       this.fgObject = null
     }

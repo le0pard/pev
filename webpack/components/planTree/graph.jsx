@@ -2,6 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import _round from 'lodash/round'
 import PlanTreeNode from './node'
+import {
+  PLANS_PROP
+} from 'lib/planParser'
 
 export default class PlanTreeGraph extends React.Component {
   static propTypes = {
@@ -25,11 +28,11 @@ export default class PlanTreeGraph extends React.Component {
           onClick={() => showPlanNodeInfo(node)}
         />
         {
-          node.Plans &&
-          Array.isArray(node.Plans) &&
-          node.Plans.length &&
+          node[PLANS_PROP] &&
+          Array.isArray(node[PLANS_PROP]) &&
+          node[PLANS_PROP].length &&
           <ul>
-            {node.Plans.map((n, i) => this.renderNode(plan, n, selectedNode, showPlanNodeInfo, i))}
+            {node[PLANS_PROP].map((n, i) => this.renderNode(plan, n, selectedNode, showPlanNodeInfo, i))}
           </ul>
         }
       </li>

@@ -38,10 +38,10 @@ export default class PlanTreeFlamegraph extends React.Component {
     super(props)
     this.myFlamegraphEl = React.createRef()
 
-    this.recalculateGraphWidth = _throttle(this.recalculateGraphWidth.bind(this), 400)
+    this.recalculateFlamegraphWidth = _throttle(this.recalculateFlamegraphWidth.bind(this), 400)
   }
 
-  recalculateGraphWidth() {
+  recalculateFlamegraphWidth() {
     if (this.fgObject && this.myFlamegraphEl.current) {
       this.fgObject.width(this.flamegraphWidth()).update(this.flamegraphData())
     }
@@ -92,11 +92,11 @@ export default class PlanTreeFlamegraph extends React.Component {
       }
     }
 
-    window.addEventListener('resize', this.recalculateGraphWidth)
+    window.addEventListener('resize', this.recalculateFlamegraphWidth)
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.recalculateGraphWidth)
+    window.removeEventListener('resize', this.recalculateFlamegraphWidth)
 
     if (this.fgObject) {
       this.fgObject.clear()

@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import _round from 'lodash/round'
 import _flattenDeep from 'lodash/flattenDeep'
+import _throttle from 'lodash/throttle'
 import {select, easeCubic} from 'd3'
 import {flamegraph} from 'd3-flame-graph'
 import {
@@ -36,24 +37,43 @@ export default class PlanTreeFlamegraph extends React.Component {
   constructor(props) {
     super(props)
     this.myFlamegraphEl = React.createRef()
+
+    this.recalculateGraphWidth = _throttle(this.recalculateGraphWidth.bind(this), 400)
+  }
+
+  recalculateGraphWidth() {
+    if (this.fgObject && this.myFlamegraphEl.current) {
+      this.fgObject.width(this.flamegraphWidth()).update(this.flamegraphData())
+    }
+  }
+
+  flamegraphData() {
+    const {plan, node} = this.props
+    return convertNodeToFlamegraph(plan, node)
+  }
+
+  flamegraphWidth() {
+    if (this.myFlamegraphEl.current && this.myFlamegraphEl.current.offsetWidth) {
+      return this.myFlamegraphEl.current.offsetWidth - 10
+    }
+
+    return 960
   }
 
   componentDidMount() {
-    const {plan, node, selectedNode, showPlanNodeInfo} = this.props
-
-    const schema = convertNodeToFlamegraph(plan, node)
+    const {selectedNode, showPlanNodeInfo} = this.props
 
     this.fgObject = flamegraph()
-      .width(960)
-      .cellHeight(18)
+      .width(this.flamegraphWidth())
+      .cellHeight(25)
       .transitionDuration(750)
-      .minFrameSize(5)
+      .minFrameSize(4)
       .transitionEase(easeCubic)
       .differential(false)
       .selfValue(true)
       .onClick((d) => showPlanNodeInfo(d.data.node))
     const fgElement = select(this.myFlamegraphEl.current)
-      .datum(schema)
+      .datum(this.flamegraphData())
       .call(this.fgObject)
 
     if (selectedNode) {
@@ -71,14 +91,19 @@ export default class PlanTreeFlamegraph extends React.Component {
         }
       }
     }
+
+    window.addEventListener('resize', this.recalculateGraphWidth)
   }
 
   componentWillUnmount() {
+    window.removeEventListener('resize', this.recalculateGraphWidth)
+
     if (this.fgObject) {
       this.fgObject.clear()
       this.fgObject.destroy()
       this.fgObject = null
     }
+
   }
 
   render() {

@@ -130,7 +130,7 @@ export class PlanParser {
 
   // actual duration and actual cost are calculated by subtracting child values from the total
   calculateActuals(node) {
-    if (node[ACTUAL_TOTAL_TIME_PROP]) {
+    if (node.hasOwnProperty(ACTUAL_TOTAL_TIME_PROP)) {
       node[ACTUAL_DURATION_PROP] = node[ACTUAL_TOTAL_TIME_PROP]
       // since time is reported for an invidual loop, actual duration must be adjusted by number of loops
       // unless the current node is a child of a gather node
@@ -141,7 +141,7 @@ export class PlanParser {
       node[ACTUAL_DURATION_PROP] = node[ACTUAL_DURATION_PROP] - this.childrenDuration(node, 0)
     }
 
-    if (node[TOTAL_COST_PROP]) {
+    if (node.hasOwnProperty(TOTAL_COST_PROP)) {
       node[ACTUAL_COST_PROP] = node[TOTAL_COST_PROP]
     }
 

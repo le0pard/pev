@@ -37,7 +37,6 @@ export default class PlanTree extends React.Component {
     this.props.resetPlan()
   }
 
-
   getTitle(plan) {
     if (plan.name && plan.name.length) {
       return plan.name
@@ -88,7 +87,7 @@ export default class PlanTree extends React.Component {
             () => changePlanView(planView === GRAPH_VIEW ? FLAMEGRAPH_VIEW : GRAPH_VIEW)
           }>Toggle View</button>
         </div>
-        <ScrollContainer className="plan-tree-container plan-tree-drag-cursor">
+        <ScrollContainer className="plan-tree-container plan-tree-drag-cursor" hideScrollbars={false}>
           {
             planView === FLAMEGRAPH_VIEW ?
             <PlanTreeFlamegraph

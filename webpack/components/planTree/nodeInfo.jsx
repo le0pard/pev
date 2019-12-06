@@ -31,11 +31,12 @@ import {
 export default class PlanTreeNodeInfo extends React.Component {
   static propTypes = {
     plan: PropTypes.object.isRequired,
-    node: PropTypes.object.isRequired
+    node: PropTypes.object.isRequired,
+    onClose: PropTypes.func.isRequired
   }
 
   render() {
-    const {plan, node} = this.props
+    const {plan, node, onClose} = this.props
 
     const executionTime = plan.Plan[EXECUTION_TIME_PROP] || plan.Plan[ACTUAL_TOTAL_TIME_PROP]
     const executionTimePercent = _round((node[ACTUAL_DURATION_PROP] / executionTime) * 100)
@@ -43,6 +44,7 @@ export default class PlanTreeNodeInfo extends React.Component {
 
     return (
       <div className="plan-node-info-container">
+        <button onClick={onClose}>Close</button>
         <p>{node[NODE_TYPE_PROP]}</p>
         {
           node[ACTUAL_DURATION_PROP] &&

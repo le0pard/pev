@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import PlanTree from 'components/planTree'
-import {requestPlan, showPlanNodeInfo, resetPlan} from 'reducers/plans'
+import {requestPlan, showPlanNodeInfo, clearPlanNodeInfo, resetPlan} from 'reducers/plans'
 import {changePlanView} from 'reducers/settings'
 
 const mapStateToProps = (state) => ({
@@ -14,6 +14,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   requestPlan: (data) => dispatch(requestPlan(data)),
   showPlanNodeInfo: (node) => dispatch(showPlanNodeInfo(node)),
+  clearPlanNodeInfo: () => dispatch(clearPlanNodeInfo()),
   changePlanView: (view) => dispatch(changePlanView(view)),
   resetPlan: () => dispatch(resetPlan())
 })

@@ -11,6 +11,7 @@ export const errorPlan = createAction('Errors plan')
 export const resetPlan = createAction('Reset plan')
 
 export const showPlanNodeInfo = createAction('Show plan node info')
+export const clearPlanNodeInfo = createAction('Clear plan node info')
 
 export const requestAddPlan = createAction('Request add plan')
 export const successAddPlan = createAction('Success add plan')
@@ -52,6 +53,7 @@ const plan = createReducer({
 const selectedNode = createReducer({
   [requestPlan]: () => null,
   [showPlanNodeInfo]: (state, payload) => payload,
+  [clearPlanNodeInfo]: () => null,
   [resetPlan]: () => null
 }, null)
 

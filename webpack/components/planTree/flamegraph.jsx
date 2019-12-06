@@ -54,7 +54,10 @@ export default class PlanTreeFlamegraph extends React.Component {
 
   flamegraphWidth() {
     if (this.myFlamegraphEl.current && this.myFlamegraphEl.current.offsetWidth) {
-      return this.myFlamegraphEl.current.offsetWidth - 10
+      const flamegraphWidth = this.myFlamegraphEl.current.offsetWidth - 10
+      if (flamegraphWidth >= 600) {
+        return flamegraphWidth
+      }
     }
 
     return 960
@@ -93,6 +96,17 @@ export default class PlanTreeFlamegraph extends React.Component {
     }
 
     window.addEventListener('resize', this.recalculateFlamegraphWidth)
+  }
+
+  componentDidUpdate(prevProps) {
+    const {selectedNode, showPlanNodeInfo} = this.props
+
+    if (!!prevProps.selectedNode && !selectedNode && this.fgObject) {
+      this.fgObject.onClick(() => {}) // resetZoom will click on root
+      this.fgObject.resetZoom()
+      this.fgObject.clear()
+      this.fgObject.onClick((d) => showPlanNodeInfo(d.data.node))
+    }
   }
 
   componentWillUnmount() {

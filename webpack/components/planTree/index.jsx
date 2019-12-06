@@ -22,6 +22,7 @@ export default class PlanTree extends React.Component {
     selectedNode: PropTypes.object,
     requestPlan: PropTypes.func.isRequired,
     showPlanNodeInfo: PropTypes.func.isRequired,
+    clearPlanNodeInfo: PropTypes.func.isRequired,
     resetPlan: PropTypes.func.isRequired
   }
 
@@ -53,6 +54,7 @@ export default class PlanTree extends React.Component {
       planID,
       selectedNode,
       showPlanNodeInfo,
+      clearPlanNodeInfo,
       planView,
       changePlanView
     } = this.props
@@ -105,7 +107,7 @@ export default class PlanTree extends React.Component {
           }
         </ScrollContainer>
         <div className="plan-tree-sidebar">
-          {selectedNode && <PlanTreeNodeInfo plan={planJSON} node={selectedNode} />}
+          {selectedNode && <PlanTreeNodeInfo plan={planJSON} node={selectedNode} onClose={clearPlanNodeInfo} />}
         </div>
       </div>
     )

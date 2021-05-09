@@ -43,7 +43,7 @@
     "file-loader": "4.3.0",
     "formik": "2.0.6",
     "history": "4.10.1",
-    "lodash": "4.17.19",
+    "lodash": "4.17.21",
     "lost": "8.3.1",
     "lovefield": "^2.1.12",
     "mini-css-extract-plugin": "0.8.0",

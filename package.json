@@ -47,7 +47,7 @@
     "lost": "8.3.1",
     "lovefield": "^2.1.12",
     "mini-css-extract-plugin": "0.8.0",
-    "node-sass": "4.7.2",
+    "node-sass": "4.13.1",
     "normalize.css": "8.0.1",
     "offline-plugin": "5.0.7",
     "postcss-browser-reporter": "0.6.0",
